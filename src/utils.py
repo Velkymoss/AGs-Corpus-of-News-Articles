@@ -43,9 +43,11 @@ def get_clean_data(filepath: str = "data/newsspace200.csv") -> tuple[pd.DataFram
     idx_str_category = {i:l for (i,l) in zip([l for l in range(len(label_strings))], label_strings)}
     return df, idx_str_category
 
-def get_train_dev_test_set(df: pd.DataFrame, threshold_minority_class: float = 0.01) -> tuple[pd.DataFrame]:
+def get_train_dev_test_set(df: pd.DataFrame, threshold_minority_class: float = 0.01, min_token: int = 20, max_token: int = 250) -> tuple[pd.DataFrame]:
     if "labels" not in df.columns:
         raise ValueError("The dataframe does not contain the column 'labels'")
+    # filtering out articles with less than 20 tokens and more than 250 tokens
+    df = df[(df.article_token_length >= min_token) & (df.article_token_length <= max_token)]
     # getting frequency distribution of the labels
     frequency_distribution = {idx: (freq/(len(df)), freq) for idx, freq in df.labels.value_counts().items()}
     # kicking out underrepresented classes
