@@ -13,11 +13,14 @@ def num_tokens_from_string(string: str, encoding_name: str = "cl100k_base") -> i
     return num_tokens
 
 
-def get_idx2lbl_lbl2idx(df: pd.DataFrame) -> tuple[dict]:
-    idx2lbl = {i: df.category.unique()[i]
-               for i in range(0, len(df.category.unique()))}
-    lbl2idx = {df.category.unique()[i]: i for i in range(
-        0, len(df.category.unique()))}
+def get_idx2lbl_lbl2idx(df: pd.DataFrame, column: str = "category") -> tuple[dict]:
+    if column not in df.columns:
+        raise ValueError(
+            f"The dataframe does not contain the column '{column}'")
+    idx2lbl = {i: df[column].unique()[i]
+               for i in range(0, len(df[column].unique()))}
+    lbl2idx = {df[column].unique()[i]: i for i in range(
+        0, len(df[column].unique()))}
     return idx2lbl, lbl2idx
 
 

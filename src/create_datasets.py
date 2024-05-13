@@ -1,7 +1,7 @@
 import json
 from utils import get_clean_data, get_train_dev_test_set
 
-df, idx_label = get_clean_data()
+df = get_clean_data()
 train_set, dev_set, test_set = get_train_dev_test_set(df)
 
 df.to_csv('data/clean_data.csv', index=False)
