@@ -68,6 +68,7 @@ def get_train_dev_test_set(df: pd.DataFrame, threshold_minority_class: float = 0
     # filtering out articles with less than 20 tokens and more than 250 tokens
     df = df[(df.article_token_length >= min_token) &
             (df.article_token_length <= max_token)]
+    
     # getting frequency distribution of the category
     frequency_distribution = {idx: (freq/(len(df)), freq)
                               for idx, freq in df.category.value_counts().items()}
@@ -110,3 +111,20 @@ def get_train_dev_test_set(df: pd.DataFrame, threshold_minority_class: float = 0
     test_set = pd.concat([category_datasets[idx]["test"]
                          for idx in category_datasets])
     return train_set, dev_set, test_set
+
+
+def get_total_dataset(df: pd.DataFrame, threshold_minority_class: float = 0.01, min_token: int = 20, max_token: int = 250) -> pd.DataFrame:
+    if "category" not in df.columns:
+        raise ValueError(
+            "The dataframe does not contain the column 'category'")
+    # filtering out articles with less than 20 tokens and more than 250 tokens
+    df = df[(df.article_token_length >= min_token) &
+            (df.article_token_length <= max_token)]
+    # getting frequency distribution of the category
+    frequency_distribution = {idx: (freq/(len(df)), freq)
+                              for idx, freq in df.category.value_counts().items()}
+    # kicking out underrepresented classes
+    underrepresented = {
+        idx for idx in frequency_distribution if frequency_distribution[idx][0] < threshold_minority_class}
+    df = df[~df.category.isin(underrepresented)]
+    return df
