@@ -17,11 +17,11 @@ def get_idx2lbl_lbl2idx(df: pd.DataFrame, column: str = "category") -> tuple[dic
     if column not in df.columns:
         raise ValueError(
             f"The dataframe does not contain the column '{column}'")
-    idx2lbl = {i: df[column].unique()[i]
-               for i in range(0, len(df[column].unique()))}
-    lbl2idx = {df[column].unique()[i]: i for i in range(
+    category2lbl = {i: df[column].unique()[i]
+                    for i in range(0, len(df[column].unique()))}
+    lbl2category = {df[column].unique()[i]: i for i in range(
         0, len(df[column].unique()))}
-    return idx2lbl, lbl2idx
+    return category2lbl, lbl2category
 
 
 def get_clean_data(filepath: str = "data/newsspace200.csv") -> pd.DataFrame:
@@ -68,48 +68,60 @@ def get_train_dev_test_set(df: pd.DataFrame, threshold_minority_class: float = 0
     # filtering out articles with less than 20 tokens and more than 250 tokens
     df = df[(df.article_token_length >= min_token) &
             (df.article_token_length <= max_token)]
-    
     # getting frequency distribution of the category
-    frequency_distribution = {idx: (freq/(len(df)), freq)
-                              for idx, freq in df.category.value_counts().items()}
+    frequency_distribution = {category: (freq/(len(df)), freq)
+                              for category, freq in df.category.value_counts().items()}
     # kicking out underrepresented classes
     underrepresented = {
-        idx for idx in frequency_distribution if frequency_distribution[idx][0] < threshold_minority_class}
+        category for category in frequency_distribution if frequency_distribution[category][0] < threshold_minority_class}
     df = df[~df.category.isin(underrepresented)]
+   
     # updating frequency distribution
-    frequency_distribution = {idx: (freq/(len(df)), freq)
-                              for idx, freq in df.category.value_counts().items()}
+    frequency_distribution = {category: (freq/(len(df)), freq)
+                              for category, freq in df.category.value_counts().items()}
     # getting absolute frequency of the smallest class
     smallest_n = min(df.category.value_counts())
     # calcularing size of train, devtest and test set
     smallest_train_n = int(smallest_n * 0.7)
-    train_n = int(smallest_train_n * len(frequency_distribution))
-    devtest_n = int(train_n * 0.15)
+    devtest_n = int(len(df) * 0.15)
     # calculating absolute frequency distribution for devtest and test set
     dev_test_distribution = {
-        idx: int(devtest_n*freq[0]) for idx, freq in frequency_distribution.items()}
+        category: int(devtest_n*freq[0]) for category, freq in frequency_distribution.items()}
     # creating datasets for train, dev and test per category
     category_datasets = {}
-    for idx, freq in dev_test_distribution.items():
-        category_df = df[df.category == idx]
-        num_samples = smallest_train_n + 2*freq
-        sample_indices = random.sample(range(len(category_df)), num_samples)
-        train_indices = sample_indices[:smallest_train_n]
-        dev_indices = sample_indices[smallest_train_n:(
-            smallest_train_n+(freq))]
-        test_indices = sample_indices[(smallest_train_n+freq):]
+    for category, freq in dev_test_distribution.items():
+        category_df = df[df.category == category]
+        if category in ["World", "Entertainment", "Top Stories"]:
+            num_samples = smallest_train_n + 28000 + 2*freq
+            sample_indices = random.sample(
+                range(len(category_df)), num_samples)
+            train_indices = sample_indices[:smallest_train_n + 28000]
+            dev_indices = sample_indices[smallest_train_n + 28000:(
+                smallest_train_n + 28000 + (freq))]
+            test_indices = sample_indices[(smallest_train_n + 28000 +freq):]
+
+        else:
+            num_samples = smallest_train_n + 2*freq
+            sample_indices = random.sample(
+                            range(len(category_df)), num_samples)
+            train_indices = sample_indices[:smallest_train_n]
+            dev_indices = sample_indices[smallest_train_n:(
+                            smallest_train_n+(freq))]
+            test_indices = sample_indices[(smallest_train_n+freq):]
+
         category_train = category_df.iloc[train_indices]
         category_dev = category_df.iloc[dev_indices]
         category_test = category_df.iloc[test_indices]
-        category_datasets[idx] = {"train": category_train,
-                                  "dev": category_dev, "test": category_test}
+        category_datasets[category] = {"train": category_train,
+                                       "dev": category_dev, "test": category_test}
     # concatenating the datasets
-    train_set = pd.concat([category_datasets[idx]["train"]
-                          for idx in category_datasets])
-    dev_set = pd.concat([category_datasets[idx]["dev"]
-                        for idx in category_datasets])
-    test_set = pd.concat([category_datasets[idx]["test"]
-                         for idx in category_datasets])
+    train_set = pd.concat([category_datasets[category]["train"]
+                          for category in category_datasets])
+    dev_set = pd.concat([category_datasets[category]["dev"]
+                        for category in category_datasets])
+    test_set = pd.concat([category_datasets[category]["test"]
+                         for category in category_datasets])
+    print(train_set.category.value_counts())
     return train_set, dev_set, test_set
 
 
@@ -121,10 +133,10 @@ def get_total_dataset(df: pd.DataFrame, threshold_minority_class: float = 0.01, 
     df = df[(df.article_token_length >= min_token) &
             (df.article_token_length <= max_token)]
     # getting frequency distribution of the category
-    frequency_distribution = {idx: (freq/(len(df)), freq)
-                              for idx, freq in df.category.value_counts().items()}
+    frequency_distribution = {category: (freq/(len(df)), freq)
+                              for category, freq in df.category.value_counts().items()}
     # kicking out underrepresented classes
     underrepresented = {
-        idx for idx in frequency_distribution if frequency_distribution[idx][0] < threshold_minority_class}
+        category for category in frequency_distribution if frequency_distribution[category][0] < threshold_minority_class}
     df = df[~df.category.isin(underrepresented)]
     return df

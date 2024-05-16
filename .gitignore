@@ -5,3 +5,6 @@ __pycache__
 venv 
 newsSpace
 .vscode
+data/train_set.csv
+data/dev_set.csv
+data/test_set.csv
