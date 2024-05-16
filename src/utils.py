@@ -75,7 +75,7 @@ def get_train_dev_test_set(df: pd.DataFrame, threshold_minority_class: float = 0
     underrepresented = {
         category for category in frequency_distribution if frequency_distribution[category][0] < threshold_minority_class}
     df = df[~df.category.isin(underrepresented)]
-   
+
     # updating frequency distribution
     frequency_distribution = {category: (freq/(len(df)), freq)
                               for category, freq in df.category.value_counts().items()}
@@ -98,15 +98,15 @@ def get_train_dev_test_set(df: pd.DataFrame, threshold_minority_class: float = 0
             train_indices = sample_indices[:smallest_train_n + 28000]
             dev_indices = sample_indices[smallest_train_n + 28000:(
                 smallest_train_n + 28000 + (freq))]
-            test_indices = sample_indices[(smallest_train_n + 28000 +freq):]
+            test_indices = sample_indices[(smallest_train_n + 28000 + freq):]
 
         else:
             num_samples = smallest_train_n + 2*freq
             sample_indices = random.sample(
-                            range(len(category_df)), num_samples)
+                range(len(category_df)), num_samples)
             train_indices = sample_indices[:smallest_train_n]
             dev_indices = sample_indices[smallest_train_n:(
-                            smallest_train_n+(freq))]
+                smallest_train_n+(freq))]
             test_indices = sample_indices[(smallest_train_n+freq):]
 
         category_train = category_df.iloc[train_indices]
@@ -121,7 +121,7 @@ def get_train_dev_test_set(df: pd.DataFrame, threshold_minority_class: float = 0
                         for category in category_datasets])
     test_set = pd.concat([category_datasets[category]["test"]
                          for category in category_datasets])
-    print(train_set.category.value_counts())
+
     return train_set, dev_set, test_set
 
 
