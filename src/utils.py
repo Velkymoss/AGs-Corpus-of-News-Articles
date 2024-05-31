@@ -56,15 +56,27 @@ def get_clean_data(filepath: str = "data/newsspace200.csv", min_token: int = 20,
     df = df[df.title_token_length <= 100]
     df["article_token_length"] = df["description_token_length"] + \
         df["title_token_length"]
-    # df["article"] = "title: " + df["title"] + " \n " + "description: " + df["description"]
-    df["article"] = f"""
-    title: {df["title"]}
-
-    description: {df["description"]}
-    """
+    df["article"] = "title: " + df["title"] + "\ndescription: " + df["description"]
     # filtering out articles with less than 20 tokens and more than 250 tokens
     df = df[(df.article_token_length >= min_token) &
             (df.article_token_length <= max_token)]
+    dataset = {}
+    for i in range(len(df)):
+        article = df.article.iloc[i]
+        label = df.category.iloc[i]
+        if article not in dataset:
+            dataset[article] = {label}
+        else:
+            if label not in dataset[article]:
+                dataset[article].add(label)
+    dataset_list = [(k, v) for k, v in dataset.items()]
+    df = pd.DataFrame(dataset_list, columns=['article', 'labels'])
+    datapoints = []
+    for i in range(len(df)):
+        if len(df.labels.iloc[i]) == 1 and  str(next(iter(df.labels.iloc[i]))) in list(valid_categories):
+            datapoints.append(i)
+    df = df.iloc[datapoints]
+    df['labels'] = df['labels'].apply(lambda x: next(iter(x)))
     return df
 
 
