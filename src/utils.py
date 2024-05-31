@@ -24,7 +24,7 @@ def get_idx2lbl_lbl2idx(df: pd.DataFrame, column: str = "category") -> tuple[dic
     return category2lbl, lbl2category
 
 
-def get_clean_data(filepath: str = "data/newsspace200.csv") -> pd.DataFrame:
+def get_clean_data(filepath: str = "data/newsspace200.csv", min_token: int = 20, max_token: int = 250) -> pd.DataFrame:
     """
     Input:
         path to the newsspace200 csv file, file must contain the columns 'title', description' and 'category'
@@ -56,18 +56,22 @@ def get_clean_data(filepath: str = "data/newsspace200.csv") -> pd.DataFrame:
     df = df[df.title_token_length <= 100]
     df["article_token_length"] = df["description_token_length"] + \
         df["title_token_length"]
-    df["article"] = "title: " + df["title"] + \
-        "description: " + df["description"]
-    return df
+    # df["article"] = "title: " + df["title"] + " \n " + "description: " + df["description"]
+    df["article"] = f"""
+    title: {df["title"]}
 
-
-def get_train_dev_test_set(df: pd.DataFrame, threshold_minority_class: float = 0.01, min_token: int = 20, max_token: int = 250) -> tuple[pd.DataFrame]:
-    if "category" not in df.columns:
-        raise ValueError(
-            "The dataframe does not contain the column 'category'")
+    description: {df["description"]}
+    """
     # filtering out articles with less than 20 tokens and more than 250 tokens
     df = df[(df.article_token_length >= min_token) &
             (df.article_token_length <= max_token)]
+    return df
+
+
+def get_train_dev_test_set(df: pd.DataFrame, threshold_minority_class: float = 0.01) -> tuple[pd.DataFrame]:
+    if "category" not in df.columns:
+        raise ValueError(
+            "The dataframe does not contain the column 'category'")
     # getting frequency distribution of the category
     frequency_distribution = {category: (freq/(len(df)), freq)
                               for category, freq in df.category.value_counts().items()}
