@@ -30,8 +30,10 @@
 | Music Feeds               |   1.00    |  1.00  |   1.00   |  
 
   
+
 ![Plot](plots/f1_class.png)  
   
-  
+
+
 ![Plot](plots/confusion_matrix.png)  
   
