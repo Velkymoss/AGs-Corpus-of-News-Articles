@@ -9,7 +9,7 @@ To recreate the cleaned version of the data set which was used for training, use
 ![Plot](plots/class_distribution.png)  
 ---
   
-Data cleaning process:
+**Data cleaning process:**
 - Remove data points with missing titles and descriptions
 - Concatenate description and title to article column
 - Filter out articles with less than 20 tokens and more than 250 tokens
@@ -24,7 +24,7 @@ For training and evaluating the model a train-dev-test split of 80-10-10 has bee
 All 3 sets were sampled to keep the label distribution of the overall dataset.  
 Because of the highly imbalanced class distribution complementary class weights have been used for fine-tuning the model.  
   
-**Hyperparameters**:
+**Hyperparameters:**
 | Hyperparameter       | Value   |
 |----------------------|---------|
 | Batch Size (Train)   | 48      |
