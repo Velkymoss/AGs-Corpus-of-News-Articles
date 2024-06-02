@@ -2,7 +2,8 @@
 
 ## Data
 AG's corpus of news articles: http://groups.di.unipi.it/~gulli/AG_corpus_of_news_articles.html  
-To recreate the cleaned version of the data set which was used for training, use the get_clean() data function from utils.py.
+  
+To recreate the cleaned version of the data set which was used for training, use the get_clean() data function from utils.py.  
 Data cleaning process:
 - Remove data points with missing titles and descriptions
 - Concatenate description and title to article column
