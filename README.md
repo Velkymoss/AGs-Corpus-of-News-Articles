@@ -14,7 +14,8 @@ To recreate the cleaned version of the data set which was used for training, use
 - Remove data points with missing titles and descriptions
 - Concatenate description and title to article column
 - Filter out articles with less than 20 tokens and more than 250 tokens
-- Filter out datapoints which don't have a unique label (some data points appear multiple times in the dataset with multiple labels. For training only datapoints with unique labels have been used)  
+- Filter out datapoints which don't have a unique label (some data points appear multiple times in the dataset with multiple labels. For training only datapoints with unique labels have been used)
+   
 The cleaned dataset has 246390 rows and 2 columns (article & labels).
 
 ## Model
