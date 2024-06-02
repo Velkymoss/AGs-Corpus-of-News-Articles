@@ -16,12 +16,13 @@ Data cleaning process:
 - Filter out datapoints which don't have a unique label (some data points appear multiple times in the dataset with multiple labels. For training only datapoints with unique labels have been used)
 
 ## Model
-For the classification task an XLNet-base-case instance has been finetuned (https://huggingface.co/xlnet/xlnet-base-cased). XLNet is an autoregressive language model based on the Transformer architecture that models the permutation of the factorization order of tokens in a sequence.  
+For the classification task an XLNet-base-case instance has been finetuned (https://huggingface.co/xlnet/xlnet-base-cased).  
+XLNet is an autoregressive language model based on the Transformer architecture that models the permutation of the factorization order of tokens in a sequence.  
 
 ## Training Process
 For training and evaluating the model a train-dev-test split of 80-10-10 has been used.
 All 3 sets were sampled to keep the label distribution of the overall dataset.
-Because of the highly imbalanced class distribution complementary class weights have been used during fine-tuning the model.
+Because of the highly imbalanced class distribution complementary class weights have been used for fine-tuning the model.
 
 
 ## Results
