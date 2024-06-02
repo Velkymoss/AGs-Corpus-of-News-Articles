@@ -29,9 +29,9 @@
 | Toons                     |   1.00    |  1.00  |   1.00   |
 | Music Feeds               |   1.00    |  1.00  |   1.00   |  
 
-Here we have a short look at the F1-score per class and the confusion matrix:
   
 ![Plot](plots/f1_class.png)  
+  
   
 ![Plot](plots/confusion_matrix.png)  
   
