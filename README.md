@@ -10,6 +10,9 @@
 | Macro Avg     |   0.87    |  0.84  |   0.85   |
 | Weighted Avg  |   0.89    |  0.89  |   0.89   |
 
+---
+
+
 **Per class:**
 
 | Class                     | Precision | Recall | F1-Score |
