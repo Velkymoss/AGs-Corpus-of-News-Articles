@@ -35,6 +35,8 @@ text = "Example input text for classification"
 # Perform text classification
 predicted_class_label = model(text)[0]["label"] 
 ```
+**Expected Output:**
+Predicted class label: Sports
 
 
 ## Training Process
