@@ -20,7 +20,7 @@ For the classification task an XLNet-base-case instance has been finetuned (http
 XLNet is an autoregressive language model based on the Transformer architecture that models the permutation of the factorization order of tokens in a sequence.  
 
 ## How to use the model
-  
+The model can be loaded and used via the Hugging Face Transformers library.  
 ```python
 # Use a pipeline as a high-level helper
 from transformers import pipeline
