@@ -28,12 +28,12 @@
 | Top Stories               |   0.39    |  0.16  |   0.23   |
 | Toons                     |   1.00    |  1.00  |   1.00   |
 | Music Feeds               |   1.00    |  1.00  |   1.00   |  
-  
-  
-  
+
+
+---
+
 ![Plot](plots/f1_class.png)  
-  
-  
-  
+
+---
+
 ![Plot](plots/confusion_matrix.png)  
-  
