@@ -1,7 +1,16 @@
 # News category classification
 
 ## Data
-AG's corpus of news articles: http://groups.di.unipi.it/~gulli/AG_corpus_of_news_articles.html
+AG's corpus of news articles: http://groups.di.unipi.it/~gulli/AG_corpus_of_news_articles.html  
+To recreate the cleaned version of the data set which was used for training, use the get_clean() data function from utils.py.
+Data cleaning process:
+- Remove data points with missing titles and descriptions
+- Concatenate description and title to article column
+- 
+
+For training and evaluating the model a train-dev-test split of 80-10-10 has been used.
+All 3 sets were sampled to keep the label distribution of the overall dataset.
+
 
 ## Results
 
