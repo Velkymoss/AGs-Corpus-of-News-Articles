@@ -1,5 +1,5 @@
 # News category classification
-This project is about fine-tuning an auto-regressive language model for performing news-category classification.
+This project focuses on fine-tuning an autoregressive language model to classify news articles into different categories.
 
 ## Data
 AG's corpus of news articles: http://groups.di.unipi.it/~gulli/AG_corpus_of_news_articles.html  
@@ -68,6 +68,7 @@ predicted_class_label = id2label[predicted_class_id]
 For training and evaluating the model a train-dev-test split of 80-10-10 has been used.
 All 3 sets were sampled to keep the label distribution of the overall dataset.  
 Because of the highly imbalanced class distribution complementary class weights have been used for fine-tuning the model.  
+The model has been fine-tuned in google colab with a T4-GPU. Training takes ~4 hours. For the code see  news_category_classification.ipynb.
   
 **Hyperparameters:**
 | Hyperparameter       | Value   |
