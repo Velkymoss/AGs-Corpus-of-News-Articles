@@ -32,6 +32,7 @@ Because of the highly imbalanced class distribution complementary class weights 
 | Number of Epochs     | 2       |
 | Adam Epsilon         | 1e-6    |  
   
+  ---
   
 ## Results
 
