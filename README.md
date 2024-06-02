@@ -1,4 +1,7 @@
-# AGs-Corpus-of-News-Articles
+# News category classification
+
+## Data
+AG's corpus of news articles: http://groups.di.unipi.it/~gulli/AG_corpus_of_news_articles.html
 
 ## Results
 
