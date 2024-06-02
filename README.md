@@ -1,4 +1,5 @@
 # News category classification
+This project is about fine-tuning an auto-regressive language model for performing news-category classification.
 
 ## Data
 AG's corpus of news articles: http://groups.di.unipi.it/~gulli/AG_corpus_of_news_articles.html  
@@ -13,14 +14,15 @@ To recreate the cleaned version of the data set which was used for training, use
 - Remove data points with missing titles and descriptions
 - Concatenate description and title to article column
 - Filter out articles with less than 20 tokens and more than 250 tokens
-- Filter out datapoints which don't have a unique label (some data points appear multiple times in the dataset with multiple labels. For training only datapoints with unique labels have been used)
+- Filter out datapoints which don't have a unique label (some data points appear multiple times in the dataset with multiple labels. For training only datapoints with unique labels have been used)  
+The cleaned dataset has 246390 rows and 2 columns (article & labels).
 
 ## Model
 For the classification task an XLNet-base-case instance has been finetuned (https://huggingface.co/xlnet/xlnet-base-cased).  
 XLNet is an autoregressive language model based on the Transformer architecture that models the permutation of the factorization order of tokens in a sequence.  
 
 ## How to use the model
-The model can be loaded and used via the Hugging Face Transformers library.  
+The model can be loaded and used via the Hugging Face Transformers library (https://pypi.org/project/transformers/). 
 ```python
 # Use a pipeline as a high-level helper
 from transformers import pipeline
