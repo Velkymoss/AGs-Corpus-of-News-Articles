@@ -23,6 +23,8 @@ XLNet is an autoregressive language model based on the Transformer architecture 
 For training and evaluating the model a train-dev-test split of 80-10-10 has been used.
 All 3 sets were sampled to keep the label distribution of the overall dataset.  
 Because of the highly imbalanced class distribution complementary class weights have been used for fine-tuning the model.  
+  
+---
 **Hyperparameters**:
 | Hyperparameter       | Value   |
 |----------------------|---------|
@@ -30,8 +32,7 @@ Because of the highly imbalanced class distribution complementary class weights 
 | Learning Rate        | 2e-5    |
 | Number of Epochs     | 2       |
 | Adam Epsilon         | 1e-6    |
-
-
+---
 
 ## Results
 
