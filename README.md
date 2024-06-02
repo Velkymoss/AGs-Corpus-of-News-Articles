@@ -29,4 +29,6 @@
 | Toons                     |   1.00    |  1.00  |   1.00   |
 | Music Feeds               |   1.00    |  1.00  |   1.00   |
 
+
 ![Plot](plots/f1_class.png)
+*Description: This plot illustrates the distribution of data points in the dataset.*
