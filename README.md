@@ -19,6 +19,24 @@ To recreate the cleaned version of the data set which was used for training, use
 For the classification task an XLNet-base-case instance has been finetuned (https://huggingface.co/xlnet/xlnet-base-cased).  
 XLNet is an autoregressive language model based on the Transformer architecture that models the permutation of the factorization order of tokens in a sequence.  
 
+## How to use the model
+
+You can use the model for text classification by following these steps:
+
+```python
+from transformers import pipeline
+
+# Load the text classification pipeline
+model = pipeline("text-classification", model="Velkymoss/XLNet-news-category-classifier", tokenizer="Velkymoss/XLNet-news-category-classifier")
+
+# Example input text
+text = "Example input text for classification"
+
+# Perform text classification
+predicted_class_label = model(text)[0]["label"] 
+```
+
+
 ## Training Process
 For training and evaluating the model a train-dev-test split of 80-10-10 has been used.
 All 3 sets were sampled to keep the label distribution of the overall dataset.  
