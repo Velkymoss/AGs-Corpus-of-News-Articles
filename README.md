@@ -20,28 +20,46 @@ For the classification task an XLNet-base-case instance has been finetuned (http
 XLNet is an autoregressive language model based on the Transformer architecture that models the permutation of the factorization order of tokens in a sequence.  
 
 ## How to use the model
-
-You can use the model for text classification by following these steps:
-
+  
 ```python
+# Use a pipeline as a high-level helper
 from transformers import pipeline
 
 # Load the text classification pipeline
 model = pipeline("text-classification", model="Velkymoss/XLNet-news-category-classifier", tokenizer="Velkymoss/XLNet-news-category-classifier")
 
 # Example input text
-text = "Example input text for classification"
+text = "title: Wall St. Bears Claw Back Into the Black (Reuters) description: Reuters - Short-sellers, Wall Street's dwindling\band of ultra-cynics, are seeing green again."
 
 # Perform text classification
 predicted_class_label = model(text)[0]["label"] 
-
-
-**Actual Output (from running the code):**
-
 ```
-**Expected Output:**
-Predicted class label: Sports
+  
+```python
+# Load model directly
+import torch
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
+# load model and tokenizer
+model = AutoModelForSequenceClassification.from_pretrained("Velkymoss/XLNet-news-category-classifier", num_labels=14)
+tokenizer = AutoTokenizer.from_pretrained("Velkymoss/XLNet-news-category-classifier")
+
+# retrieve id to label dict
+id2label = model.config.id2label
+
+# tokenize input sequence
+text = "title: Wall St. Bears Claw Back Into the Black (Reuters) description: Reuters - Short-sellers, Wall Street's dwindling\band of ultra-cynics, are seeing green again."
+input = tokenizer(text, return_tensors="pt")
+
+# calculate prediction
+with torch.no_grad():
+    outputs = model(**input)
+    logits = outputs.logits
+
+# extract label prediction
+predicted_class_id = torch.argmax(logits, dim=1).item()
+predicted_class_label = id2label[predicted_class_id]
+```
 
 ## Training Process
 For training and evaluating the model a train-dev-test split of 80-10-10 has been used.
