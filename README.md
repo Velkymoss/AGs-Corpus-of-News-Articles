@@ -31,4 +31,8 @@
 
 
 ![Plot](plots/f1_class.png)
-*Description: This plot illustrates the distribution of data points in the dataset.*
+*F1-Score per class*
+
+
+![Plot](plots/confusion_matrix.png)
+*Confusion matrix*
