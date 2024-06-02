@@ -30,7 +30,7 @@ Because of the highly imbalanced class distribution complementary class weights 
 | Batch Size (Train)   | 48      |
 | Learning Rate        | 2e-5    |
 | Number of Epochs     | 2       |
-| Adam Epsilon         | 1e-6    |
+| Adam Epsilon         | 1e-6    |  
   
   
 ## Results
