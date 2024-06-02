@@ -2,7 +2,7 @@
 
 ## Results
 
-Overall:
+**Overall:**
 
 | Metric        | Precision | Recall | F1-Score |
 |---------------|-----------|--------|----------|
@@ -10,7 +10,7 @@ Overall:
 | Macro Avg     |   0.87    |  0.84  |   0.85   |
 | Weighted Avg  |   0.89    |  0.89  |   0.89   |
 
-Per class:
+**Per class:**
 
 | Class                     | Precision | Recall | F1-Score |
 |---------------------------|-----------|--------|----------|
@@ -28,3 +28,5 @@ Per class:
 | Top Stories               |   0.39    |  0.16  |   0.23   |
 | Toons                     |   1.00    |  1.00  |   1.00   |
 | Music Feeds               |   1.00    |  1.00  |   1.00   |
+
+![Plot](plots/f1_class.png.png)
