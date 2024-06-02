@@ -3,7 +3,7 @@
 ## Data
 AG's corpus of news articles: http://groups.di.unipi.it/~gulli/AG_corpus_of_news_articles.html  
   
-To recreate the cleaned version of the data set which was used for training, use the get_clean() data function from utils.py.  
+To recreate the cleaned version of the data set which was used for training, use the get_clean_data() function from utils.py.  
   
 ---
 ![Plot](plots/class_distribution.png)  
@@ -15,8 +15,13 @@ Data cleaning process:
 - Filter out articles with less than 20 tokens and more than 250 tokens
 - Filter out datapoints which don't have a unique label (some data points appear multiple times in the dataset with multiple labels. For training only datapoints with unique labels have been used)
 
+## Model
+For the classification task an XLNet-base-case instance has been finetuned (https://huggingface.co/xlnet/xlnet-base-cased). XLNet is an autoregressive language model based on the Transformer architecture that models the permutation of the factorization order of tokens in a sequence.  
+
+## Training Process
 For training and evaluating the model a train-dev-test split of 80-10-10 has been used.
 All 3 sets were sampled to keep the label distribution of the overall dataset.
+Because of the highly imbalanced class distribution complementary class weights have been used during fine-tuning the model.
 
 
 ## Results
