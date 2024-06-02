@@ -8,5 +8,4 @@ newsSpace
 data/train_set.csv
 data/dev_set.csv
 data/test_set.csv
-results/*
 #data/clean_data.csv
