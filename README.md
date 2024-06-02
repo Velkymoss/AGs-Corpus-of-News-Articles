@@ -29,4 +29,4 @@
 | Toons                     |   1.00    |  1.00  |   1.00   |
 | Music Feeds               |   1.00    |  1.00  |   1.00   |
 
-![Plot](plots/f1_class.png.png)
+![Plot](plots/f1_class.png)
