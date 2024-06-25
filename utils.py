@@ -44,7 +44,7 @@ def get_clean_data(filepath: str = "data/newsspace200.csv", min_token: int = 20,
             "The csv file does not contain the column 'description'")
     if "category" not in df.columns:
         raise ValueError("The csv file does not contain the column 'category'")
-    df = df[["title", "description", "category"]]
+    #df = df[["title", "description", "category"]]
     df = df[df['description'].notna() & df['title'].notna()]
     valid_categories = {category for category, frequency in df.category.value_counts(
     ).items() if frequency > 1000}
@@ -61,16 +61,41 @@ def get_clean_data(filepath: str = "data/newsspace200.csv", min_token: int = 20,
     df = df[(df.article_token_length >= min_token) &
             (df.article_token_length <= max_token)]
     dataset = {}
+
+    # for i in range(len(df)):
+    #     article = df.article.iloc[i]
+    #     label = df.category.iloc[i]
+    #     # if article not in dataset:
+    #     #     dataset[article] = {label}
+    #     # else:
+    #     #     if label not in dataset[article]:
+    #     #         dataset[article].add(label)
+    # dataset_list = [(k, v) for k, v in dataset.items()]
+    # df = pd.DataFrame(dataset_list, columns=['article', 'labels'])
+
+    # Iterate through each row in the DataFrame
     for i in range(len(df)):
+        title = df.title.iloc[i]
+        description = df.description.iloc[i]
+        source = df.source.iloc[i]
         article = df.article.iloc[i]
         label = df.category.iloc[i]
+
+        # Check if the article is already in the dataset
         if article not in dataset:
-            dataset[article] = {label}
+            # Store the title, description, source, and label in a tuple
+            dataset[article] = {'labels': {label}, 'title': title, 'description': description, 'source': source}
         else:
-            if label not in dataset[article]:
-                dataset[article].add(label)
-    dataset_list = [(k, v) for k, v in dataset.items()]
-    df = pd.DataFrame(dataset_list, columns=['article', 'labels'])
+            # Add the label if it's not already in the set of labels
+            if label not in dataset[article]['labels']:
+                dataset[article]['labels'].add(label)
+
+    # Convert the dataset to a list of tuples
+    dataset_list = [(k, v['labels'], v['title'], v['description'], v['source']) for k, v in dataset.items()]
+
+    # Create a DataFrame from the dataset list
+    df = pd.DataFrame(dataset_list, columns=['article', 'labels', 'title', 'description', 'source'])
+
     datapoints = []
     for i in range(len(df)):
         if len(df.labels.iloc[i]) == 1 and  str(next(iter(df.labels.iloc[i]))) in list(valid_categories):
